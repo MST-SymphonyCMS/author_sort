@@ -37,7 +37,7 @@ Class extension_author_sort extends  Extension {
                 `user_id` INT(11) UNSIGNED NOT NULL,
                 `direction` ENUM('asc', 'desc') DEFAULT 'asc',
                 `field_id` INT(11) UNSIGNED NOT NULL,
-                `section_handle` VARCHAR(50) UNSIGNED NOT NULL,
+                `section_handle` VARCHAR(50) NOT NULL,
                 PRIMARY KEY (`id`)
             )
         ");
