@@ -32,7 +32,7 @@ Class extension_author_sort extends  Extension {
 
     public function install() {
         Symphony::Database()->query("
-            CREATE TABLE IF NOT EXISTS `tbl_fields_sort` (
+            CREATE TABLE IF NOT EXISTS `tbl_author_sort` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) UNSIGNED NOT NULL,
                 `direction` ENUM('asc', 'desc') DEFAULT 'asc',
@@ -52,7 +52,7 @@ Class extension_author_sort extends  Extension {
     public function checkUserSection($section){
         //check if user has a field set in the specific section
         $query = "SELECT user_id 
-                FROM tbl_fields_sort
+                FROM tbl_author_sort
                 WHERE user_id = '{$this->getUser()}'
                 AND section_handle = '{$section}'
                 LIMIT 1
@@ -66,7 +66,7 @@ Class extension_author_sort extends  Extension {
     public function getSortingField($context){
 
         $query = "SELECT field_id 
-                FROM tbl_fields_sort
+                FROM tbl_author_sort
                 WHERE user_id = '{$this->getUser()}'
                 LIMIT 1
                     ";
@@ -83,7 +83,7 @@ Class extension_author_sort extends  Extension {
             $where['user_id'] = $this->getUser();
             $where['section_handle'] = $context['section-handle'];
 
-            $context['updated'] = Symphony::Database()->update($update,'tbl_fields_sort','user_id = '.$this->getUser().' AND section_handle = "'.$context["section-handle"].'"');
+            $context['updated'] = Symphony::Database()->update($update,'tbl_author_sort','user_id = '.$this->getUser().' AND section_handle = "'.$context["section-handle"].'"');
         }
         else{
             //user does not have a field set, set a new one.
@@ -91,14 +91,14 @@ Class extension_author_sort extends  Extension {
             $insert['user_id'] = $this->getUser();
             $insert['field_id'] = $context['sort'];
             $insert['section_handle'] = $context['section-handle'];
-            $context['updated'] = Symphony::Database()->insert($insert,'tbl_fields_sort','true');
+            $context['updated'] = Symphony::Database()->insert($insert,'tbl_author_sort','true');
         }
     }
 
      public function getSortingOrder($context){
 
         $query = "SELECT direction 
-                FROM tbl_fields_sort
+                FROM tbl_author_sort
                 WHERE user_id = '{$this->getUser()}'
                 LIMIT 1
                     ";
@@ -115,7 +115,7 @@ Class extension_author_sort extends  Extension {
             $where['user_id'] = $this->getUser();
             $where['section_handle'] = $context['section-handle'];
 
-            $context['updated'] = Symphony::Database()->update($update,'tbl_fields_sort','user_id = '.$this->getUser().' AND section_handle = "'.$context["section-handle"].'"');
+            $context['updated'] = Symphony::Database()->update($update,'tbl_author_sort','user_id = '.$this->getUser().' AND section_handle = "'.$context["section-handle"].'"');
         }
         else{
             //user does not have a field set, set a new one.
@@ -123,7 +123,7 @@ Class extension_author_sort extends  Extension {
             $insert['user_id'] = $this->getUser();
             $insert['direction'] = $context['order'];
             $insert['section_handle'] = $context['section-handle'];
-            $context['updated'] = Symphony::Database()->insert($insert,'tbl_fields_sort','true');
+            $context['updated'] = Symphony::Database()->insert($insert,'tbl_author_sort','true');
         }
     }
 
