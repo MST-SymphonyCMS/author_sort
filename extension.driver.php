@@ -78,7 +78,7 @@ Class extension_author_sort extends  Extension {
 
         $query = "SELECT field_id 
                 FROM tbl_author_sort
-                WHERE user_id = '{$user}'
+                WHERE user_id = '{$user}' AND section_handle = '{$context['section-handle']}'
                 LIMIT 1
                     ";
         $context['field'] = Symphony::Database()->fetchVar('field_id',0,$query);
@@ -116,7 +116,7 @@ Class extension_author_sort extends  Extension {
 
         $query = "SELECT direction 
                 FROM tbl_author_sort
-                WHERE user_id = '{$user}'
+                WHERE user_id = '{$user}' AND section_handle = '{$context['section-handle']}'
                 LIMIT 1
                     ";
         $context['order'] = Symphony::Database()->fetchVar('direction',0,$query);
