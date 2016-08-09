@@ -46,7 +46,12 @@ Class extension_author_sort extends  Extension {
     }
 
     public function getUser(){
-        return Symphony::Author()->get('id');
+        if (Symphony::Engine() instanceof Frontend){
+            // use config sorting if frontend
+            return false;
+        } else {
+            return Symphony::Author()->get('id');
+        }
     }
 
     public function checkUserSection($section){
@@ -65,9 +70,15 @@ Class extension_author_sort extends  Extension {
 
     public function getSortingField($context){
 
+        $user = $this->getUser();
+
+        if (!$user){
+            return;
+        }
+
         $query = "SELECT field_id 
                 FROM tbl_author_sort
-                WHERE user_id = '{$this->getUser()}'
+                WHERE user_id = '{$user}'
                 LIMIT 1
                     ";
         $context['field'] = Symphony::Database()->fetchVar('field_id',0,$query);
@@ -97,9 +108,15 @@ Class extension_author_sort extends  Extension {
 
      public function getSortingOrder($context){
 
+        $user = $this->getUser();
+
+        if (!$user){
+            return;
+        }
+
         $query = "SELECT direction 
                 FROM tbl_author_sort
-                WHERE user_id = '{$this->getUser()}'
+                WHERE user_id = '{$user}'
                 LIMIT 1
                     ";
         $context['order'] = Symphony::Database()->fetchVar('direction',0,$query);
