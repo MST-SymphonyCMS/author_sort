@@ -46,11 +46,15 @@ Class extension_author_sort extends  Extension {
     }
 
     public function getUser(){
-        if (Symphony::Engine() instanceof Frontend){
-            // use config sorting if frontend
+        try {
+            if (Symphony::Engine() instanceof Frontend){
+                // use config sorting if frontend
+                return false;
+            } else {
+                return Symphony::Author()->get('id');
+            }
+        } catch (Exception $e) {
             return false;
-        } else {
-            return Symphony::Author()->get('id');
         }
     }
 
